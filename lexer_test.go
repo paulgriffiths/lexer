@@ -17,7 +17,9 @@ func TestLexerGood(t *testing.T) {
 		{
 			// Words and numbers. Note that it will split "ten40"
 			// into two tokens, even though they're not separated
-			// by a space.
+			// by a space. We can suppress this behavior by using
+			// the \b empty string to match word boundaries
+			// (see TestLexerNoMatch for an example).
 
 			[]string{
 				"[[:alpha:]]+",
@@ -270,12 +272,16 @@ func TestLexerNoMatch(t *testing.T) {
 		input string
 		index int
 	}{
-		{"c", 0},
-		{"ac", 1},
-		{"ababcabab", 4},
+		{"?", 0},
+		{"a!", 1},
+		{"abab%abab", 4},
+		{"abc 123 abc123", 8},
 	}
 
-	l, err := lexer.New([]string{"a", "b"})
+	l, err := lexer.New([]string{
+		"\\b[[:alpha:]]+\\b",
+		"\\b[[:digit:]]+\\b",
+	})
 	if err != nil {
 		t.Errorf("couldn't create lexer: %v", err)
 		return
