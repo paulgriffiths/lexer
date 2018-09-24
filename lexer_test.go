@@ -223,6 +223,33 @@ func TestLexerGood(t *testing.T) {
 				lexer.Token{1, "bitbitbit", 36},
 			},
 		},
+		{
+			// For context-free grammars
+
+			[]string{
+				"[a-df-zA-Z][[:alnum:]']*",
+				"`[^`]+`",
+				"\\|",
+				":",
+				"\n",
+				"\\be\\b",
+			},
+			"S : A' | `terminal` | e\nA' : `another`\n",
+			lexer.TokenList{
+				lexer.Token{0, "S", 0},
+				lexer.Token{3, ":", 2},
+				lexer.Token{0, "A'", 4},
+				lexer.Token{2, "|", 7},
+				lexer.Token{1, "`terminal`", 9},
+				lexer.Token{2, "|", 20},
+				lexer.Token{5, "e", 22},
+				lexer.Token{4, "\n", 23},
+				lexer.Token{0, "A'", 24},
+				lexer.Token{3, ":", 27},
+				lexer.Token{1, "`another`", 29},
+				lexer.Token{4, "\n", 38},
+			},
+		},
 	}
 
 	for n, tc := range testCases {
