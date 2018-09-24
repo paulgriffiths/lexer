@@ -28,7 +28,15 @@ want to match a literal left parenthesis, the pattern should be `\(`, or
 treated as the start of a capturing group by the regular expression
 engine.
 
-Example:
+Whitespace may be used to separate tokens, but is otherwise ignored by
+the lexical analyzer. The newline character is treated as whitespace and
+similarly ignored, unless it is included (by itself) as one of the
+patterns passed to the lexical analyzer at creation time, in which case
+each newline character will be returned as a separate token (unless
+another pattern embeds a newline character, such as may occur with
+multi-line comments in source code.)
+
+## Example
 
     names := []string{"Word", "Number", "Punctuation"}
     patterns := []string{"[[:alpha:]]+", "[[:digit:]]+", "[\\.,]"}
