@@ -72,30 +72,42 @@ for _, t := range tokens {
 
 # Types
 
-    type Error interface {
-        error
-        // contains filtered or unexported methods
-    }
+```go
+type Error interface {
+    error
+    // contains filtered or unexported methods
+}
+```
 
 `Error` is an interface for lexer error types.
 
-    type InputError struct {
-        // contains filtered or unexported fields
-    }
+```go
+type InputError struct {
+    // contains filtered or unexported fields
+}
+```
 
 `InputError` is returned when the lexer cannot read from its input.
 
-    func (e InputError) Error() string
+```go
+func (e InputError) Error() string
+```
+
 
 `Error` returns a string representation of an `InputError`.
 
-    type Lexer struct {
-        // contains filtered or unexported fields
-    }
+```go
+type Lexer struct {
+    // contains filtered or unexported fields
+}
+```
 
 `Lexer` implements a general-purpose lexical analyzer.
 
-    func New(lexemes []string) (*Lexer, Error)
+```go
+func New(lexemes []string) (*Lexer, Error)
+```
+
 
 `New` creates a new lexer from a slice of strings containing regular
 expressions to match lexemes. Later, the `Lex` function will return a list
@@ -103,54 +115,75 @@ of tokens with an (id, value) pair. The id will be the index in this
 slice of the pattern that was matched to identify that lexeme, so the
 order is significant.
 
-    func (l *Lexer) Lex(input io.Reader) (TokenList, Error)
+```go
+func (l *Lexer) Lex(input io.Reader) (TokenList, Error)
+```
+
 
 `Lex` lexically analyses the input and returns a list of tokens.
 
-    type MatchError struct {
-        // Index is the index in the input where the matching failure
-        // occurred.
-        Index int
-    }
+```go
+type MatchError struct {
+    // Index is the index in the input where the matching failure
+    // occurred.
+    Index int
+}
+```
 
 `MatchError` is returned when the lexer finds input that it cannot match
 against any of its lexeme patterns.
 
-    func (e MatchError) Error() string
+```go
+func (e MatchError) Error() string
+```
+
 
 `Error` returns a string representation of a `MatchError`.
 
-    type RegexError struct {
-        // contains filtered or unexported fields
-    }
+```go
+type RegexError struct {
+    // contains filtered or unexported fields
+}
+```
 
 `RegexError` is returned when the lexer cannot compile the regular
 expressions passed to it at creation time.
 
-    func (e RegexError) Error() string
+```go
+func (e RegexError) Error() string
+```
+
 
 `Error` returns a string representation of a `RegexError`.
 
-    type Token struct {
-        // ID is index of the string slice of lexeme patterns used to
-        // create the lexer at which the lexeme pattern used to identify
-        // this token is located.
-        ID int
-        // Value is the actual string value of the lexeme found by the
-        // lexical analyzer.
-        Value string
-        // Index is the position of the input at which the lexeme was
-        // found.
-        Index int
-    }
+```go
+type Token struct {
+    // ID is index of the string slice of lexeme patterns used to
+    // create the lexer at which the lexeme pattern used to identify
+    // this token is located.
+    ID int
+    // Value is the actual string value of the lexeme found by the
+    // lexical analyzer.
+    Value string
+    // Index is the position of the input at which the lexeme was
+    // found.
+    Index int
+}
+```
 
 `Token` is a lexical token output by the lexical analyzer.
 
-    func (t Token) Equals(other Token) bool
+```go
+func (t Token) Equals(other Token) bool
+```
+
 
 `Equals` tests if two tokens are equal.
 
-    func (t Token) Less(other Token) bool
+```go
+func (t Token) Less(other Token) bool
+```
+
 
 `Less` tests if a token is less than another token.
 
@@ -158,22 +191,37 @@ expressions passed to it at creation time.
 
 `TokenList` is a list of lexical tokens.
 
-    func (t TokenList) Equals(other TokenList) bool
+```go
+func (t TokenList) Equals(other TokenList) bool
+```
+
 
 `Equals` tests if two token lists are equal.
 
-    func (t TokenList) IsEmpty() bool
+```go
+func (t TokenList) IsEmpty() bool
+```
+
 
 `IsEmpty` checks if the list is empty.
 
-    func (t TokenList) Len() int
+```go
+func (t TokenList) Len() int
+```
+
 
 `Len` returns the number of tokens in the list.
 
-    func (t TokenList) Less(i, j int) bool
+```go
+func (t TokenList) Less(i, j int) bool
+```
+
 
 `Less` returns true if list[i] < list[j].
 
-    func (t TokenList) Swap(i, j int)
+```go
+func (t TokenList) Swap(i, j int)
+```
+
 
 `Swap` swaps tokens i and j in the list.
