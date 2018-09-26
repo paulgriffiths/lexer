@@ -187,7 +187,9 @@ func (t Token) Less(other Token) bool
 
 `Less` tests if a token is less than another token.
 
-    type TokenList []Token
+```go
+type TokenList []Token
+```
 
 `TokenList` is a list of lexical tokens.
 
